@@ -25,9 +25,33 @@ angular.module('myApp.controllers', [])
 
         var result = DataService.popArray(arr, "title", key);
 
-        if (confirm("Вы уверены что хотите удалить? " + result)) {
-            $data.items.splice(result, 1);
-        }
+        // if (confirm("Вы уверены что хотите удалить? " + result)) {
+        //         $data.items.splice(result, 1);
+        //    }
+
+        ons.notification.confirm({
+            message: 'Вы уверены что хотите удалить цель?',
+            // or messageHTML: '<div>Message in HTML</div>',
+            title: 'Внимание!',
+            buttonLabels: ['Да', 'Нет'],
+            animation: 'default', // or 'none'
+            primaryButtonIndex: 1,
+            cancelable: true,
+            callback: function (index) {
+                if (index) {
+                    console.log("No");
+                } else {
+                    console.log("Yes");
+                    $data.items.splice(result, 1);
+                    modal.show();
+
+                }
+
+
+            }
+        });
+
+
 
     };
 
@@ -72,8 +96,13 @@ angular.module('myApp.controllers', [])
                 date: $scope.rdate
             }
         });
-        console.log($localStorage.data);
-        alert("Цель сохранена!");
+        // console.log($localStorage.data);
+        //  alert("Цель сохранена!");
+        modalsave.show();
+        setTimeout('navi.popPage()', 2000);
+
+
+
     };
 
 

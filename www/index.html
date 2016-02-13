@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <!meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -29,7 +29,7 @@
     <script src="js/controllers.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/services.js"></script>
-    <script src="js/app2.js"></script>
+    <script src="js/app.js"></script>
     <script src="scripts/ng-cordova.min.js"></script>
     <script src="scripts/ngStorage.min.js"></script>
     <script src="scripts/load-image.all.min.js"></script>
@@ -219,9 +219,15 @@
                     <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </ons-list-item>
             </ons-list>
+            <ons-modal var="modal">
 
+                <br>Ваша цель
+                <br>успешно удалена.
+                <br>
+                <ons-back-button>Посмотреть что осталось</ons-back-button>
+            </ons-modal>
             <br>
-            <ons-button ng-click="delTarget(this)">del</ons-button>
+            <ons-button id="delbutton" ng-click="delTarget(this)">delete</ons-button>
         </ons-page>
     </ons-template>
 
@@ -324,11 +330,16 @@
 
             </ons-list>
 
+            <ons-modal var="modalsave">
 
+                <br>Поздравляю!
+                <br>Ваша цель сохранена.
+
+            </ons-modal>
             <div style="text-align: center" class="content-padded">
                 <ons-button ng-click="addTarget()">Сохранить</ons-button>
 
-                <ons-button modifier="outline">Отмена</ons-button>
+                <ons-button ng-click="navi.popPage();" modifier="outline">Отмена</ons-button>
             </div>
             <br>
 
