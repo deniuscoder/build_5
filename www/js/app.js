@@ -7,7 +7,8 @@
   'myApp.controllers',
   'onsen',
   'ngCordova',
-  'ngStorage'
+  'ngStorage',
+  'ngSanitize'
   ]);
 
 })();

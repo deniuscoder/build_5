@@ -67,7 +67,7 @@
    }
    
    .timeline-id {
-       font-size: 14px;
+       font-size: 12px;
        opacity: 0.4;
    }
    
@@ -76,4 +76,17 @@
        font-size: 14px;
        opacity: 0.8;
        line-height: 1.15;
+   }
+   
+   img.timeline-image {
+       margin: 0px auto;
+       display: block;
+   }
+   
+   canvas {
+       width: 75%;
+   }
+   
+   span.item-title.h1.ng-binding {
+       font-size: 18px;
    }

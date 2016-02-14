@@ -18,16 +18,14 @@ angular.module('myApp.controllers', [])
 
 .controller('DetailController', function ($scope, $data, DataService) {
     $scope.item = $data.selectedItem;
+    // console.log($scope.item.discription);
+    $scope.html = $scope.item.discription;
 
     $scope.delTarget = function (event) {
         var arr = $data.items;
         var key = event.item.title;
 
         var result = DataService.popArray(arr, "title", key);
-
-        // if (confirm("Вы уверены что хотите удалить? " + result)) {
-        //         $data.items.splice(result, 1);
-        //    }
 
         ons.notification.confirm({
             message: 'Вы уверены что хотите удалить цель?',
@@ -38,23 +36,13 @@ angular.module('myApp.controllers', [])
             primaryButtonIndex: 1,
             cancelable: true,
             callback: function (index) {
-                if (index) {
-                    console.log("No");
-                } else {
-                    console.log("Yes");
+                if (index) {} else {
                     $data.items.splice(result, 1);
                     modal.show();
-
                 }
-
-
             }
         });
-
-
-
     };
-
 })
 
 .controller('MasterController', function ($scope, $data) {
@@ -63,7 +51,21 @@ angular.module('myApp.controllers', [])
     $scope.showDetail = function (index) {
         var selectedItem = $data.items[index];
         $data.selectedItem = selectedItem;
-        console.log($data);
+        console.log(index);
+        $scope.navi.pushPage('detail.html', {
+            title: selectedItem.title
+        });
+    };
+})
+
+.controller('GroupController', function ($scope, $data, DataService) {
+    $scope.items = $data.items;
+    $scope.showDetail = function (index) {
+        var arr = $data.items;
+        var key = index.item.title;
+        var result = DataService.popArray(arr, "title", key);
+        var selectedItem = $data.items[result];
+        $data.selectedItem = selectedItem;
         $scope.navi.pushPage('detail.html', {
             title: selectedItem.title
         });
@@ -75,33 +77,27 @@ angular.module('myApp.controllers', [])
 
     $scope.addTarget = function () {
         var img = document.getElementById("result");
-        var dataimg = img.lastChild.toDataURL("image/jpeg", 0.5);
+        var dataimg = img.lastChild.toDataURL("image/jpeg", 1.0);
 
         $scope.newImage = dataimg;
 
         var setDate = toDate.valueAsDate;
-        if (setDate && $scope.check) $scope.rdate = setDate.toLocaleDateString();
+        if (setDate && $scope.check) $scope.stop = setDate.toLocaleDateString();
 
-
-        //console.log($scope.newImage);
-        //$localStorage.base.data.base.push
 
         $localStorage.data.items.push({
             title: $scope.title,
             img: $scope.newImage,
-            discription: $scope.discription,
+            discription: $scope.discription.replace(/\r?\n/g, '<br />'),
             motivation: $scope.motivation,
-            range: {
-                title: $scope.range,
-                date: $scope.rdate
-            }
+            group: $scope.group,
+            start: $scope.start,
+            stop: $scope.stop
         });
-        // console.log($localStorage.data);
+        console.log($localStorage.data);
         //  alert("Цель сохранена!");
         modalsave.show();
         setTimeout('navi.popPage()', 2000);
-
-
 
     };
 
@@ -128,29 +124,11 @@ angular.module('myApp.controllers', [])
             function (img) {
                 result.appendChild(img);
             }, {
-                maxWidth: 200,
+                maxWidth: 500,
                 canvas: true
             } // Options
         );
     };
-
-    //   var list = document.getElementById('list');
-    /*    list.onclick = function(event) {
-       var target = event.target; // где был клик?
-        console.log(target);
-        if (target.className !== 'item-inner') return; // не на TD? тогда не интересует
-
-       // console.log(target); // подсветить TD
-    }; */
-    /*
-    document.onclick = function(event) {
-        if (!event.target.hasAttribute('data-click')) return;
-
-        var counter = event.target;
-
-        console.log(counter);
-      };
-        */
 
 
     $scope.date = function (obj) {
@@ -159,43 +137,43 @@ angular.module('myApp.controllers', [])
         switch (obj.path[1].id) {
 
         case 'Day':
-            $scope.range = obj.srcElement.value;
+            $scope.group = obj.srcElement.value;
+            $scope.start = d.toLocaleDateString();
             d.setDate(d.getDate() + 1);
-            $scope.rdate = d.toLocaleDateString();
-
-            console.log(d);
+            $scope.stop = d.toLocaleDateString();
             $scope.check = false;
+            $scope.checkday = true;
             break;
         case 'Week':
-            //    alert('Week');
-            $scope.range = obj.srcElement.value;
+            $scope.group = obj.srcElement.value;
+            $scope.start = d.toLocaleDateString();
             d.setDate(d.getDate() + 7);
-            $scope.rdate = d.toLocaleDateString();
+            $scope.stop = d.toLocaleDateString();
             $scope.check = false;
             break;
         case 'Month':
-            //   alert('Month');
-            $scope.range = obj.srcElement.value;
+            $scope.group = obj.srcElement.value;
+            $scope.start = d.toLocaleDateString();
             d.setDate(d.getDate() + 30);
-            $scope.rdate = d.toLocaleDateString();
+            $scope.stop = d.toLocaleDateString();
             $scope.check = false;
             break;
         case 'Quarter':
-            //   alert('Quarter');
-            $scope.range = obj.srcElement.value;
+            $scope.group = obj.srcElement.value;
+            $scope.start = d.toLocaleDateString();
             d.setMonth(d.getMonth() + 4);
-            $scope.rdate = d.toLocaleDateString();
+            $scope.stop = d.toLocaleDateString();
             $scope.check = false;
             break;
         case 'Year':
-            //   alert('Year');
-            $scope.range = obj.srcElement.value;
+            $scope.group = obj.srcElement.value;
+            $scope.start = d.toLocaleDateString();
             d.setFullYear(d.getFullYear() + 1);
-            $scope.rdate = d.toLocaleDateString();
+            $scope.stop = d.toLocaleDateString();
             $scope.check = false;
             break;
         case 'Date':
-            $scope.range = obj.srcElement.value;
+            $scope.group = obj.srcElement.value;
             $scope.check = true;
             break;
         default:
