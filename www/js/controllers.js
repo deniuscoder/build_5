@@ -124,7 +124,7 @@ angular.module('myApp.controllers', [])
             function (img) {
                 result.appendChild(img);
             }, {
-                maxWidth: 500,
+                maxWidth: 250,
                 canvas: true
             } // Options
         );
