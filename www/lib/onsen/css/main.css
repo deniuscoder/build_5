@@ -47,7 +47,6 @@
    }
    
    .timeline-image {
-       width: 90%;
        border-radius: 4px;
    }
    
@@ -81,10 +80,6 @@
    img.timeline-image {
        margin: 0px auto;
        display: block;
-   }
-   
-   canvas {
-       width: 75%;
    }
    
    span.item-title.h1.ng-binding {

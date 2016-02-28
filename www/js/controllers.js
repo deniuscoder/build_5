@@ -117,7 +117,6 @@ angular.module('myApp.controllers', [])
 
     };
 
-
     document.getElementById('file-input').onchange = function (e) {
         loadImage(
             e.target.files[0],
