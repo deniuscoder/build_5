@@ -39,6 +39,7 @@ angular.module('myApp.controllers', [])
                 if (index) {} else {
                     $data.items.splice(result, 1);
                     modal.show();
+                    setTimeout('location.reload()', 2000);
                 }
             }
         });
